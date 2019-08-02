@@ -1,0 +1,1 @@
+runs X clients, typically on a remote host, and directs their display to the local machine without losing any state.
