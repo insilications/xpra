@@ -4,12 +4,12 @@
 #
 Name     : xpra
 Version  : 2.5
-Release  : 1
+Release  : 2
 URL      : https://xpra.org/src/xpra-2.5.tar.xz
 Source0  : https://xpra.org/src/xpra-2.5.tar.xz
 Summary  : runs X clients, typically on a remote host, and directs their display to the local machine without losing any state.
 Group    : Development/Tools
-License  : BSD-3-Clause GPL-2.0 MPL-2.0-no-copyleft-exception
+License  : BSD-3-Clause GPL-2.0 LGPL-3.0 MPL-2.0-no-copyleft-exception
 Requires: xpra-bin = %{version}-%{release}
 Requires: xpra-config = %{version}-%{release}
 Requires: xpra-data = %{version}-%{release}
@@ -20,7 +20,7 @@ Requires: xpra-python3 = %{version}-%{release}
 BuildRequires : Cython
 BuildRequires : buildreq-distutils3
 BuildRequires : pkgconfig(gdk-3.0)
-BuildRequires : pkgconfig(pycairo)
+BuildRequires : pkgconfig(py3cairo)
 BuildRequires : pkgconfig(pygobject-3.0)
 BuildRequires : pkgconfig(x11)
 BuildRequires : pkgconfig(xkbfile)
@@ -28,7 +28,7 @@ BuildRequires : pkgconfig(xtst)
 BuildRequires : pycairo-dev
 BuildRequires : pygobject
 BuildRequires : python3-dev
-Patch1: fix-include-pycairo-h.patch
+Patch1: 0001-py3cairo-is-only-pycairo-for-Clear.patch
 
 %description
 FAQ for xpra
@@ -111,7 +111,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1564774663
+export SOURCE_DATE_EPOCH=1570561922
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -130,6 +130,7 @@ mkdir -p %{buildroot}/usr/share/package-licenses/xpra
 cp COPYING %{buildroot}/usr/share/package-licenses/xpra/COPYING
 cp html5/LICENSE %{buildroot}/usr/share/package-licenses/xpra/html5_LICENSE
 cp html5/js/lib/broadway/LICENSE %{buildroot}/usr/share/package-licenses/xpra/html5_js_lib_broadway_LICENSE
+cp xpra/gtk_common/gtk2_notifier-LICENSE.txt %{buildroot}/usr/share/package-licenses/xpra/xpra_gtk_common_gtk2_notifier-LICENSE.txt
 python3 -tt setup.py build  install --root=%{buildroot}
 echo ----[ mark ]----
 cat %{buildroot}/usr/lib/python3*/site-packages/*/requires.txt || :
@@ -348,6 +349,7 @@ rm -f %{buildroot}/usr/lib/sysusers.d/xpra.conf
 /usr/share/package-licenses/xpra/COPYING
 /usr/share/package-licenses/xpra/html5_LICENSE
 /usr/share/package-licenses/xpra/html5_js_lib_broadway_LICENSE
+/usr/share/package-licenses/xpra/xpra_gtk_common_gtk2_notifier-LICENSE.txt
 
 %files man
 %defattr(0644,root,root,0755)

@@ -3,4 +3,4 @@ xtst
 xkbfile
 gdk-3.0
 pygobject-3.0
-pycairo
+py3cairo
