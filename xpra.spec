@@ -4,7 +4,7 @@
 #
 Name     : xpra
 Version  : 2.5
-Release  : 4
+Release  : 5
 URL      : https://xpra.org/src/xpra-2.5.tar.xz
 Source0  : https://xpra.org/src/xpra-2.5.tar.xz
 Summary  : runs X clients, typically on a remote host, and directs their display to the local machine without losing any state.
@@ -23,7 +23,11 @@ BuildRequires : pkgconfig(gdk-3.0)
 BuildRequires : pkgconfig(py3cairo)
 BuildRequires : pkgconfig(pygobject-3.0)
 BuildRequires : pkgconfig(x11)
+BuildRequires : pkgconfig(xext)
+BuildRequires : pkgconfig(xfixes)
+BuildRequires : pkgconfig(xi)
 BuildRequires : pkgconfig(xkbfile)
+BuildRequires : pkgconfig(xrandr)
 BuildRequires : pkgconfig(xtst)
 BuildRequires : pycairo-dev
 BuildRequires : pygobject
@@ -94,6 +98,7 @@ python components for the xpra package.
 Summary: python3 components for the xpra package.
 Group: Default
 Requires: python3-core
+Provides: pypi(xpra)
 
 %description python3
 python3 components for the xpra package.
@@ -101,6 +106,7 @@ python3 components for the xpra package.
 
 %prep
 %setup -q -n xpra-2.5
+cd %{_builddir}/xpra-2.5
 %patch1 -p1
 
 %build
@@ -111,7 +117,8 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1570561922
+export SOURCE_DATE_EPOCH=1582901629
+# -Werror is for werrorists
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -127,10 +134,10 @@ python3 setup.py build
 export MAKEFLAGS=%{?_smp_mflags}
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/xpra
-cp COPYING %{buildroot}/usr/share/package-licenses/xpra/COPYING
-cp html5/LICENSE %{buildroot}/usr/share/package-licenses/xpra/html5_LICENSE
-cp html5/js/lib/broadway/LICENSE %{buildroot}/usr/share/package-licenses/xpra/html5_js_lib_broadway_LICENSE
-cp xpra/gtk_common/gtk2_notifier-LICENSE.txt %{buildroot}/usr/share/package-licenses/xpra/xpra_gtk_common_gtk2_notifier-LICENSE.txt
+cp %{_builddir}/xpra-2.5/COPYING %{buildroot}/usr/share/package-licenses/xpra/06877624ea5c77efe3b7e39b0f909eda6e25a4ec
+cp %{_builddir}/xpra-2.5/html5/LICENSE %{buildroot}/usr/share/package-licenses/xpra/9744cedce099f727b327cd9913a1fdc58a7f5599
+cp %{_builddir}/xpra-2.5/html5/js/lib/broadway/LICENSE %{buildroot}/usr/share/package-licenses/xpra/90b47d629f432a2f522f4611d02cad7e19173464
+cp %{_builddir}/xpra-2.5/xpra/gtk_common/gtk2_notifier-LICENSE.txt %{buildroot}/usr/share/package-licenses/xpra/f45ee1c765646813b442ca58de72e20a64a7ddba
 python3 -tt setup.py build  install --root=%{buildroot}
 echo ----[ mark ]----
 cat %{buildroot}/usr/lib/python3*/site-packages/*/requires.txt || :
@@ -346,10 +353,10 @@ rm -f %{buildroot}/usr/lib/sysusers.d/xpra.conf
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/xpra/COPYING
-/usr/share/package-licenses/xpra/html5_LICENSE
-/usr/share/package-licenses/xpra/html5_js_lib_broadway_LICENSE
-/usr/share/package-licenses/xpra/xpra_gtk_common_gtk2_notifier-LICENSE.txt
+/usr/share/package-licenses/xpra/06877624ea5c77efe3b7e39b0f909eda6e25a4ec
+/usr/share/package-licenses/xpra/90b47d629f432a2f522f4611d02cad7e19173464
+/usr/share/package-licenses/xpra/9744cedce099f727b327cd9913a1fdc58a7f5599
+/usr/share/package-licenses/xpra/f45ee1c765646813b442ca58de72e20a64a7ddba
 
 %files man
 %defattr(0644,root,root,0755)
