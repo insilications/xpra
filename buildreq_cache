@@ -1,6 +1,2 @@
-2.5
-pkgconfig(xext)
-pkgconfig(xfixes)
-pkgconfig(xi)
-pkgconfig(xrandr)
-python3-dev
+4.0.3
+pkgconfig(harfbuzz)

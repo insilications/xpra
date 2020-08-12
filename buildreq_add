@@ -3,3 +3,5 @@
 Cython
 pygobject
 pycairo-dev
+python3-dev
+findutils

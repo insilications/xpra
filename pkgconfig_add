@@ -4,3 +4,7 @@ xkbfile
 gdk-3.0
 pygobject-3.0
 py3cairo
+xext
+xfixes
+xi
+xrandr
